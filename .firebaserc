@@ -1,0 +1,15 @@
+{
+  "projects": {
+    "default": "smart-muslim-ad4f6"
+  },
+  "targets": {
+    "smart-muslim-ad4f6": {
+      "hosting": {
+        "smart-muslim": [
+          "smart-muslim"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}

@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="sm-teal" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FAF8F2"/>
+      <stop offset="100%" stop-color="#E8DFC9"/>
+    </linearGradient>
+    <linearGradient id="sm-gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#D4B278"/>
+      <stop offset="100%" stop-color="#C9A96E"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background for dark mode use -->
+  <rect x="24" y="24" width="464" height="464" rx="96" fill="url(#sm-teal)"/>
+
+  <!-- Arch frame -->
+  <g id="arch-frame" opacity="0.92">
+    <path d="
+      M 176 380 L 176 220
+      C 176 180, 190 150, 220 125
+      Q 240 105, 256 90
+      Q 272 105, 292 125
+      C 322 150, 336 180, 336 220
+      L 336 380 Z
+    " fill="none" stroke="#0F5C5E" stroke-width="6" stroke-linejoin="round"/>
+
+    <path d="
+      M 192 375 L 192 224
+      C 192 188, 204 162, 230 140
+      Q 246 122, 256 108
+      Q 266 122, 282 140
+      C 308 162, 320 188, 320 224
+      L 320 375 Z
+    " fill="none" stroke="#0F5C5E" stroke-width="2.5" opacity="0.5"/>
+  </g>
+
+  <!-- Open book -->
+  <g id="open-book" transform="translate(256, 285)">
+    <path d="M 0 0 C -10 -8, -55 -50, -72 -75 C -82 -90, -80 -68, -72 -55 C -55 -30, -20 -5, 0 15 Z" fill="#0F5C5E" opacity="0.9"/>
+    <path d="M 0 0 C 10 -8, 55 -50, 72 -75 C 82 -90, 80 -68, 72 -55 C 55 -30, 20 -5, 0 15 Z" fill="#0F5C5E" opacity="0.9"/>
+    <line x1="0" y1="-5" x2="0" y2="20" stroke="#0F5C5E" stroke-width="2" opacity="0.6"/>
+
+    <line x1="-15" y1="-15" x2="-50" y2="-40" stroke="#E8DFC9" stroke-width="1.5" opacity="0.3" stroke-linecap="round"/>
+    <line x1="-12" y1="-5" x2="-45" y2="-28" stroke="#E8DFC9" stroke-width="1.5" opacity="0.25" stroke-linecap="round"/>
+    <line x1="-10" y1="5" x2="-38" y2="-16" stroke="#E8DFC9" stroke-width="1.5" opacity="0.2" stroke-linecap="round"/>
+    <line x1="15" y1="-15" x2="50" y2="-40" stroke="#E8DFC9" stroke-width="1.5" opacity="0.3" stroke-linecap="round"/>
+    <line x1="12" y1="-5" x2="45" y2="-28" stroke="#E8DFC9" stroke-width="1.5" opacity="0.25" stroke-linecap="round"/>
+    <line x1="10" y1="5" x2="38" y2="-16" stroke="#E8DFC9" stroke-width="1.5" opacity="0.2" stroke-linecap="round"/>
+  </g>
+
+  <!-- Star -->
+  <g id="star-light" transform="translate(256, 130)">
+    <rect x="-12" y="-12" width="24" height="24" rx="3" fill="url(#sm-gold)" transform="rotate(0)"/>
+    <rect x="-12" y="-12" width="24" height="24" rx="3" fill="url(#sm-gold)" transform="rotate(45)"/>
+    <circle cx="0" cy="0" r="5" fill="#0F5C5E" opacity="0.9"/>
+    <line x1="0" y1="-22" x2="0" y2="-30" stroke="url(#sm-gold)" stroke-width="2" opacity="0.6" stroke-linecap="round"/>
+    <line x1="0" y1="22" x2="0" y2="30" stroke="url(#sm-gold)" stroke-width="2" opacity="0.4" stroke-linecap="round"/>
+    <line x1="-22" y1="0" x2="-28" y2="0" stroke="url(#sm-gold)" stroke-width="2" opacity="0.4" stroke-linecap="round"/>
+    <line x1="22" y1="0" x2="28" y2="0" stroke="url(#sm-gold)" stroke-width="2" opacity="0.4" stroke-linecap="round"/>
+  </g>
+
+  <line x1="200" y1="345" x2="312" y2="345" stroke="url(#sm-gold)" stroke-width="2" opacity="0.5" stroke-linecap="round"/>
+</svg>

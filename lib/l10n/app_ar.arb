@@ -1,0 +1,50 @@
+{
+  "@@locale": "ar",
+  "appName": "المسلم الذكي",
+  "appSubtitle": "صَدَقَةٌ جَارِيَةٌ ... نَسْأَلُكُمُ الدُّعَاءَ",
+  "prayerTimes": "مواقيت الصلاة",
+  "nextPrayer": "الصلاة القادمة",
+  "remainingTime": "المتبقي على صلاة {prayerName}",
+  "@remainingTime": {
+    "placeholders": {
+      "prayerName": {
+        "type": "String"
+      }
+    }
+  },
+  "fajr": "الفجر",
+  "sunrise": "الشروق",
+  "dhuhr": "الظهر",
+  "asr": "العصر",
+  "maghrib": "المغرب",
+  "isha": "العشاء",
+  "qibla": "القبلة",
+  "settings": "الإعدادات",
+  "calculationMethod": "طريقة الحساب",
+  "juristicMethod": "المذهب الفقهي (العصر)",
+  "standardAsr": "الجمهور (الشافعي والمالكي والحنبلي)",
+  "hanafiAsr": "المذهب الحنفي",
+  "location": "الموقع الجغرافي",
+  "autoLocation": "التحديد التلقائي (GPS)",
+  "manualLocation": "اختيار المدينة يدويًا",
+  "notifications": "التنبيهات والأذان",
+  "fullAdhan": "الأذان كاملًا",
+  "takbeerOnly": "التكبير فقط",
+  "silentAlert": "تنبيه صامت",
+  "exactAlarmPermission": "إذن المنبه الدقيق",
+  "exactAlarmExplanation": "يحتاج التطبيق إلى إذن المنبه الدقيق لتشغيل الأذان في موعده تمامًا حتى عند قفل الشاشة.",
+  "grantPermission": "منح الإذن",
+  "offlineMode": "وضع عدم الاتصال بالإنترنت",
+  "qiblaDirection": "اتجاه القبلة: {degrees}° من الشمال",
+  "@qiblaDirection": {
+    "placeholders": {
+      "degrees": {
+        "type": "String"
+      }
+    }
+  },
+  "tasbihAlertVibration": "تنبيه بالاهتزاز",
+  "tasbihAlertSound": "تنبيه صوتي",
+  "tasbihAlertSoundAndVibration": "تنبيه صوتي واهتزاز",
+  "tasbihAlertOff": "التنبيه متوقف"
+}

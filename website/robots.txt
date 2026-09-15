@@ -1,0 +1,5 @@
+# Smart Muslim Official Website
+User-agent: *
+Allow: /
+
+Sitemap: https://smart-muslim.web.app/sitemap.xml

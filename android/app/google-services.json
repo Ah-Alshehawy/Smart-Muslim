@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "335324257275",
+    "project_id": "smart-muslim-ad4f6",
+    "storage_bucket": "smart-muslim-ad4f6.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:335324257275:android:57446f3c43a8823271095e",
+        "android_client_info": {
+          "package_name": "com.smartmuslim.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAgfja-gR4E6OMw00Skvz6iSYWrsUgqoJg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

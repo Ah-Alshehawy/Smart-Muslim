@@ -1,0 +1,41 @@
+{
+  "source": "https://github.com/rn0x/Quran-Data",
+  "source_commit": "1341b85d7c5650bf12a0cb4e2da24a8342f1399f",
+  "source_license": "MIT",
+  "generator_version": "1.0.0",
+  "generated_at": "2026-09-13T09:07:12.792934Z",
+  "statistics": {
+    "surahs_count": 114,
+    "ayahs_count": 6236,
+    "pages_count": 604,
+    "juz_count": 30,
+    "sajdahs_count": 15
+  },
+  "artifacts": {
+    "quran_surahs.json": {
+      "path": "assets/quran/quran_surahs.json",
+      "size_bytes": 34406,
+      "sha256": "c6f0b1aef227ad42a9979af1f05c64527bbe673b8bfe4045510a02c0cc119ea6"
+    },
+    "quran_pages.json": {
+      "path": "assets/quran/quran_pages.json",
+      "size_bytes": 66617,
+      "sha256": "90fcf45cba123293b361407ca3639e6fa0ec40e6ebd5999d5860b987d4deca68"
+    },
+    "quran_juz.json": {
+      "path": "assets/quran/quran_juz.json",
+      "size_bytes": 5271,
+      "sha256": "be8bb7a7b1f0ad11141467f027345b669d972670144eeb53f1f43f9b0a166eeb"
+    },
+    "quran_sajdahs.json": {
+      "path": "assets/quran/quran_sajdahs.json",
+      "size_bytes": 2348,
+      "sha256": "e452fa6ab2758a2192d978e6681808d481cc95b2ff1a8fc810262b2a6213c02a"
+    },
+    "quran_verses.json": {
+      "path": "assets/quran/quran_verses.json",
+      "size_bytes": 2675674,
+      "sha256": "ab265983d2c095816f13fface0adb158d2317c16dab1a481135ae934a3d3e0b7"
+    }
+  }
+}

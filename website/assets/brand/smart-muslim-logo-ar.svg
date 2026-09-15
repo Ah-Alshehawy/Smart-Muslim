@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 120" width="480" height="120">
+  <defs>
+    <linearGradient id="sm-teal-ar" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0F5C5E"/>
+      <stop offset="100%" stop-color="#083F41"/>
+    </linearGradient>
+    <linearGradient id="sm-gold-ar" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#D4B278"/>
+      <stop offset="100%" stop-color="#C9A96E"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Icon (scaled down to fit 100x100 in 120 height) -->
+  <g transform="translate(420, 10) scale(0.195)">
+    <rect x="24" y="24" width="464" height="464" rx="96" fill="url(#sm-teal-ar)"/>
+    <path d="M 176 380 L 176 220 C 176 180, 190 150, 220 125 Q 240 105, 256 90 Q 272 105, 292 125 C 322 150, 336 180, 336 220 L 336 380 Z" fill="none" stroke="#FAF8F2" stroke-width="6" stroke-linejoin="round"/>
+    <path d="M 192 375 L 192 224 C 192 188, 204 162, 230 140 Q 246 122, 256 108 Q 266 122, 282 140 C 308 162, 320 188, 320 224 L 320 375 Z" fill="none" stroke="#FAF8F2" stroke-width="2.5" opacity="0.5"/>
+    <g transform="translate(256, 285)">
+      <path d="M 0 0 C -10 -8, -55 -50, -72 -75 C -82 -90, -80 -68, -72 -55 C -55 -30, -20 -5, 0 15 Z" fill="#FAF8F2" opacity="0.9"/>
+      <path d="M 0 0 C 10 -8, 55 -50, 72 -75 C 82 -90, 80 -68, 72 -55 C 55 -30, 20 -5, 0 15 Z" fill="#FAF8F2" opacity="0.9"/>
+      <line x1="0" y1="-5" x2="0" y2="20" stroke="#FAF8F2" stroke-width="2" opacity="0.6"/>
+    </g>
+    <g transform="translate(256, 130)">
+      <rect x="-12" y="-12" width="24" height="24" rx="3" fill="url(#sm-gold-ar)" transform="rotate(0)"/>
+      <rect x="-12" y="-12" width="24" height="24" rx="3" fill="url(#sm-gold-ar)" transform="rotate(45)"/>
+      <circle cx="0" cy="0" r="5" fill="#FAF8F2" opacity="0.9"/>
+    </g>
+  </g>
+
+  <!-- Arabic Wordmark (RTL — positioned to the left of icon) -->
+  <text x="395" y="55" font-family="'IBM Plex Sans Arabic', 'Noto Sans Arabic', sans-serif" font-weight="700" font-size="36" fill="#172A2B" text-anchor="end" direction="rtl">المسلم الذكي</text>
+
+  <!-- Subtitle -->
+  <text x="395" y="82" font-family="'IBM Plex Sans Arabic', 'Noto Sans Arabic', sans-serif" font-weight="400" font-size="14" fill="#5F6F70" text-anchor="end" direction="rtl">رفيقك للعبادة والطاعة</text>
+</svg>

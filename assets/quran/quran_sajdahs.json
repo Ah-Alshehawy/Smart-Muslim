@@ -1,0 +1,137 @@
+[
+  {
+    "surah_number": 7,
+    "ayah_number": 206,
+    "sajda_id": 1,
+    "recommended": true,
+    "obligatory": false,
+    "page": 176,
+    "juz": 9
+  },
+  {
+    "surah_number": 13,
+    "ayah_number": 15,
+    "sajda_id": 2,
+    "recommended": true,
+    "obligatory": false,
+    "page": 251,
+    "juz": 13
+  },
+  {
+    "surah_number": 16,
+    "ayah_number": 50,
+    "sajda_id": 3,
+    "recommended": true,
+    "obligatory": false,
+    "page": 272,
+    "juz": 14
+  },
+  {
+    "surah_number": 17,
+    "ayah_number": 109,
+    "sajda_id": 4,
+    "recommended": true,
+    "obligatory": false,
+    "page": 293,
+    "juz": 15
+  },
+  {
+    "surah_number": 19,
+    "ayah_number": 58,
+    "sajda_id": 5,
+    "recommended": true,
+    "obligatory": false,
+    "page": 309,
+    "juz": 16
+  },
+  {
+    "surah_number": 22,
+    "ayah_number": 18,
+    "sajda_id": 6,
+    "recommended": true,
+    "obligatory": false,
+    "page": 334,
+    "juz": 17
+  },
+  {
+    "surah_number": 22,
+    "ayah_number": 77,
+    "sajda_id": 7,
+    "recommended": true,
+    "obligatory": false,
+    "page": 341,
+    "juz": 17
+  },
+  {
+    "surah_number": 25,
+    "ayah_number": 60,
+    "sajda_id": 8,
+    "recommended": true,
+    "obligatory": false,
+    "page": 365,
+    "juz": 19
+  },
+  {
+    "surah_number": 27,
+    "ayah_number": 26,
+    "sajda_id": 9,
+    "recommended": true,
+    "obligatory": false,
+    "page": 379,
+    "juz": 19
+  },
+  {
+    "surah_number": 32,
+    "ayah_number": 15,
+    "sajda_id": 10,
+    "recommended": false,
+    "obligatory": true,
+    "page": 416,
+    "juz": 21
+  },
+  {
+    "surah_number": 38,
+    "ayah_number": 24,
+    "sajda_id": 11,
+    "recommended": true,
+    "obligatory": false,
+    "page": 454,
+    "juz": 23
+  },
+  {
+    "surah_number": 41,
+    "ayah_number": 38,
+    "sajda_id": 12,
+    "recommended": false,
+    "obligatory": true,
+    "page": 480,
+    "juz": 24
+  },
+  {
+    "surah_number": 53,
+    "ayah_number": 62,
+    "sajda_id": 13,
+    "recommended": false,
+    "obligatory": true,
+    "page": 528,
+    "juz": 27
+  },
+  {
+    "surah_number": 84,
+    "ayah_number": 21,
+    "sajda_id": 14,
+    "recommended": true,
+    "obligatory": false,
+    "page": 589,
+    "juz": 30
+  },
+  {
+    "surah_number": 96,
+    "ayah_number": 19,
+    "sajda_id": 15,
+    "recommended": false,
+    "obligatory": true,
+    "page": 597,
+    "juz": 30
+  }
+]

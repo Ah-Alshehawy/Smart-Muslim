@@ -1,0 +1,50 @@
+{
+  "@@locale": "en",
+  "appName": "Smart Muslim",
+  "appSubtitle": "Ongoing Charity (Sadaqah Jariyah) ... We ask for your prayers",
+  "prayerTimes": "Prayer Times",
+  "nextPrayer": "Next Prayer",
+  "remainingTime": "Time remaining until {prayerName}",
+  "@remainingTime": {
+    "placeholders": {
+      "prayerName": {
+        "type": "String"
+      }
+    }
+  },
+  "fajr": "Fajr",
+  "sunrise": "Sunrise",
+  "dhuhr": "Dhuhr",
+  "asr": "Asr",
+  "maghrib": "Maghrib",
+  "isha": "Isha",
+  "qibla": "Qibla",
+  "settings": "Settings",
+  "calculationMethod": "Calculation Method",
+  "juristicMethod": "Juristic Method (Asr)",
+  "standardAsr": "Standard (Shafi'i, Maliki, Hanbali)",
+  "hanafiAsr": "Hanafi",
+  "location": "Location",
+  "autoLocation": "Auto GPS Location",
+  "manualLocation": "Select City Manually",
+  "notifications": "Notifications & Adhan",
+  "fullAdhan": "Full Adhan",
+  "takbeerOnly": "Takbeer Only",
+  "silentAlert": "Silent Alert",
+  "exactAlarmPermission": "Exact Alarm Permission",
+  "exactAlarmExplanation": "Exact alarm permission is required to play Adhan alerts on time even when your device is locked.",
+  "grantPermission": "Grant Permission",
+  "offlineMode": "Offline Mode Active",
+  "qiblaDirection": "Qibla Direction: {degrees}° from North",
+  "@qiblaDirection": {
+    "placeholders": {
+      "degrees": {
+        "type": "String"
+      }
+    }
+  },
+  "tasbihAlertVibration": "Vibration Alert",
+  "tasbihAlertSound": "Sound Alert",
+  "tasbihAlertSoundAndVibration": "Sound and Vibration Alert",
+  "tasbihAlertOff": "Alerts Disabled"
+}

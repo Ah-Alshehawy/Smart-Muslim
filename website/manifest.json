@@ -1,0 +1,19 @@
+{
+  "name": "Smart Muslim | المسلم الذكي",
+  "short_name": "المسلم الذكي",
+  "description": "تطبيق إسلامي حديث، مجاني، بلا إعلانات، يحترم خصوصيتك.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FAF8F2",
+  "theme_color": "#0F5C5E",
+  "lang": "ar",
+  "dir": "rtl",
+  "icons": [
+    {
+      "src": "/assets/brand/smart-muslim-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
