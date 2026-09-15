@@ -1,6 +1,5 @@
 # Smart Muslim - Automatic APK Release & Deployment Script
-# This script uploads your latest Flutter APK to GitHub Releases with zero link-breakage!
-# The website download link permanently points to:
+# Permanent website download link:
 # https://github.com/Ah-Alshehawy/Smart-Muslim/releases/latest/download/smart-muslim.apk
 
 param (
@@ -17,13 +16,17 @@ if (-not (Test-Path $ghPath)) {
 
 # 1. Optionally build the release APK
 if ($BuildFirst) {
-    Write-Host "🔨 Building release APK with Flutter..." -ForegroundColor Cyan
-    flutter build apk --release
+    Write-Host "Building release APK with Flutter..." -ForegroundColor Cyan
+    $flutterCmd = "C:\flutter\bin\flutter.bat"
+    if (-not (Test-Path $flutterCmd)) {
+        $flutterCmd = "flutter"
+    }
+    & $flutterCmd build apk --release
 }
 
 $apkSource = "build\app\outputs\flutter-apk\app-release.apk"
 if (-not (Test-Path $apkSource)) {
-    Write-Error "Could not find APK at $apkSource. Please run with -BuildFirst or build the APK first."
+    Write-Error "Could not find APK at $apkSource. Please build the APK first or pass -BuildFirst."
     exit 1
 }
 
@@ -38,18 +41,18 @@ if (-not $Tag) {
     }
 }
 
-Write-Host "📦 Preparing Release $Tag..." -ForegroundColor Green
+Write-Host "Preparing Release $Tag..." -ForegroundColor Green
 
 # 3. Create a clean named copy of the APK
 $tempApk = "smart-muslim.apk"
 Copy-Item $apkSource -Destination $tempApk -Force
 
 try {
-    Write-Host "🚀 Uploading $tempApk to GitHub Release $Tag..." -ForegroundColor Cyan
-    & $ghPath release create $Tag $tempApk --title "Smart Muslim $Tag" --notes "Official Android Release (APK) for Smart Muslim (المسلم الذكي)"
-    Write-Host "✅ Release created and APK uploaded successfully!" -ForegroundColor Green
+    Write-Host "Uploading $tempApk to GitHub Release $Tag..." -ForegroundColor Cyan
+    & $ghPath release create $Tag $tempApk --title "Smart Muslim $Tag" --notes "Official Android Release (APK) for Smart Muslim" --latest
+    Write-Host "Release created and APK uploaded successfully!" -ForegroundColor Green
 } catch {
-    Write-Warning "Release may already exist. Attempting to upload/overwrite asset in existing release..."
+    Write-Warning "Release may already exist. Uploading/overwriting asset in existing release..."
     & $ghPath release upload $Tag $tempApk --clobber
 } finally {
     if (Test-Path $tempApk) {
@@ -57,5 +60,5 @@ try {
     }
 }
 
-Write-Host "`n🎉 Permanent download URL is active and updated:" -ForegroundColor Yellow
+Write-Host "`nPermanent download URL is active and updated:" -ForegroundColor Yellow
 Write-Host "https://github.com/Ah-Alshehawy/Smart-Muslim/releases/latest/download/smart-muslim.apk" -ForegroundColor White
