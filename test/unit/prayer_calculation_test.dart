@@ -72,5 +72,18 @@ void main() {
       expect(schedule.fajr.isBefore(schedule.sunrise), isTrue);
       expect(schedule.maghrib.isBefore(schedule.isha), isTrue);
     });
+    test('France (UOIF) uses 12° twilight angles, not zero', () {
+      final schedule = PrayerCalculatorService.calculateSchedule(
+        latitude: 48.8566,
+        longitude: 2.3522,
+        date: DateTime(2026, 3, 20),
+        method: AppCalculationMethod.france,
+        juristic: AppJuristicMethod.standard,
+      );
+
+      // With 0° angles Fajr collapses onto sunrise and Isha onto Maghrib.
+      expect(schedule.sunrise.difference(schedule.fajr).inMinutes, greaterThan(45));
+      expect(schedule.isha.difference(schedule.maghrib).inMinutes, greaterThan(45));
+    });
   });
 }

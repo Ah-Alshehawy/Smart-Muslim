@@ -128,16 +128,29 @@ class _DhikrDetailScreenState extends State<DhikrDetailScreen> {
                     Text(
                       item.textArabic,
                       textAlign: TextAlign.center,
-                      style: AppTypography.arabicText(
-                        fontSize: 20,
-                        isDark: isDark,
-                        fontWeight: FontWeight.w600,
-                      ).copyWith(height: 1.8),
+                      style: item.quranVerses.isNotEmpty
+                          ? AppTypography.quranText(fontSize: 22, isDark: isDark)
+                          : AppTypography.arabicText(
+                              fontSize: 20,
+                              isDark: isDark,
+                              fontWeight: FontWeight.w600,
+                            ).copyWith(height: 1.8),
                     ),
+                    if (item.isAbridged) ...[
+                      const SizedBox(height: 8),
+                      Text(
+                        'مختصر — يُرجع إلى المصدر للنص الكامل',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: isDark ? AppColors.darkTextSecondary : AppColors.lightTextSecondary,
+                        ),
+                      ),
+                    ],
                     const SizedBox(height: 16),
 
-                    // Fadl / Benefit
-                    if (item.benefit.isNotEmpty) ...[
+                    // Fadl stated in the narration
+                    if (item.fadl.isNotEmpty) ...[
                       Container(
                         padding: const EdgeInsets.all(12),
                         decoration: BoxDecoration(
@@ -151,12 +164,37 @@ class _DhikrDetailScreenState extends State<DhikrDetailScreen> {
                             const SizedBox(width: 8),
                             Expanded(
                               child: Text(
-                                item.benefit,
+                                'الفضل الوارد: ${item.fadl}',
                                 style: AppTypography.caption(isDark).copyWith(fontSize: 13),
                               ),
                             ),
                           ],
                         ),
+                      ),
+                      const SizedBox(height: 10),
+                    ],
+
+                    // Editorial note, styled apart from the narrated fadl
+                    if (item.note.isNotEmpty) ...[
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Icon(
+                            Icons.info_outline,
+                            size: 15,
+                            color: isDark ? AppColors.darkTextSecondary : AppColors.lightTextSecondary,
+                          ),
+                          const SizedBox(width: 6),
+                          Expanded(
+                            child: Text(
+                              'فائدة: ${item.note}',
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: isDark ? AppColors.darkTextSecondary : AppColors.lightTextSecondary,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                       const SizedBox(height: 10),
                     ],

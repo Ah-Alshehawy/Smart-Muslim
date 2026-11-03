@@ -95,7 +95,7 @@ class NotificationPreferences {
         'fajr': SinglePrayerSetting(adhanSound: 'makkah', isFullAdhan: true),
         'dhuhr': SinglePrayerSetting(adhanSound: 'makkah', isFullAdhan: true),
         'asr': SinglePrayerSetting(adhanSound: 'takbeer', isFullAdhan: false),
-        'maghrib': SinglePrayerSetting(adhanSound: 'madinah', isFullAdhan: true),
+        'maghrib': SinglePrayerSetting(adhanSound: 'makkah', isFullAdhan: true),
         'isha': SinglePrayerSetting(adhanSound: 'makkah', isFullAdhan: true),
       },
       globalNotificationsEnabled: true,

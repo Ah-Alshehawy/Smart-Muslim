@@ -16,7 +16,8 @@ class UpdateService {
       await _remoteConfig.setDefaults(const {
         'latest_version': '0.1.0',
         'force_update_version': '0.0.1',
-        'update_url': 'https://mega.nz/file/8lJ23TxC#XnRyVJH3zfKqlRNFk1yxb8LzXH5pJmNSC4_sNoPCsCY',
+        // Permanent GitHub Releases link (see upload_apk_release.ps1).
+        'update_url': 'https://github.com/Ah-Alshehawy/Smart-Muslim/releases/latest/download/smart-muslim.apk',
       });
       await _remoteConfig.fetchAndActivate();
     } catch (e) {

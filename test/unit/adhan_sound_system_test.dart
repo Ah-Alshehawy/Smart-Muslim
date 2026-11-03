@@ -32,9 +32,9 @@ void main() {
       final beepChannel = AdhanSoundResolver.getChannelId(audioEnabled: true, soundKey: 'beep');
       final silentChannel = AdhanSoundResolver.getChannelId(audioEnabled: false, soundKey: 'makkah');
 
-      expect(makkahChannel, equals('smart_muslim_channel_adhan_makkah_v3'));
-      expect(takbeerChannel, equals('smart_muslim_channel_takbeer_v3'));
-      expect(beepChannel, equals('smart_muslim_channel_chime_v3'));
+      expect(makkahChannel, equals('smart_muslim_channel_adhan_makkah_v4'));
+      expect(takbeerChannel, equals('smart_muslim_channel_takbeer_v4'));
+      expect(beepChannel, equals('smart_muslim_channel_chime_v4'));
       expect(silentChannel, equals(AdhanSoundResolver.silentChannelId));
 
       // Distinct channels guarantee Android 8+ immutable channel sound works
@@ -64,7 +64,7 @@ void main() {
           audioEnabled: config.getPrayer('fajr').adhanAudioEnabled,
           soundKey: config.getPrayer('fajr').adhanSound,
         ),
-        equals('smart_muslim_channel_adhan_makkah_v3'),
+        equals('smart_muslim_channel_adhan_makkah_v4'),
       );
 
       expect(
@@ -72,7 +72,7 @@ void main() {
           audioEnabled: config.getPrayer('dhuhr').adhanAudioEnabled,
           soundKey: config.getPrayer('dhuhr').adhanSound,
         ),
-        equals('smart_muslim_channel_takbeer_v3'),
+        equals('smart_muslim_channel_takbeer_v4'),
       );
 
       expect(
@@ -80,7 +80,7 @@ void main() {
           audioEnabled: config.getPrayer('asr').adhanAudioEnabled,
           soundKey: config.getPrayer('asr').adhanSound,
         ),
-        equals('smart_muslim_channel_chime_v3'),
+        equals('smart_muslim_channel_chime_v4'),
       );
     });
 
@@ -115,6 +115,13 @@ void main() {
         soundKey: 'makkah',
       );
       expect(silentChannel, equals(AdhanSoundResolver.silentChannelId));
+    });
+    test('6. Default non-Fajr prayers never use a Fajr-only recording', () {
+      final defaults = NotificationPreferences.defaultConfig();
+      for (final prayer in ['dhuhr', 'asr', 'maghrib', 'isha']) {
+        final sound = AdhanSoundResolver.resolve(defaults.prayers[prayer]!.adhanSound);
+        expect(sound.name.startsWith('fajr_'), isFalse, reason: prayer);
+      }
     });
   });
 }

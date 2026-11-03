@@ -798,34 +798,37 @@ class _QuranReaderScreenState extends State<QuranReaderScreen> with WidgetsBindi
                 ],
               ),
               const SizedBox(height: 12),
-              Container(
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: isDark ? AppColors.darkCard : AppColors.lightBackground,
-                  borderRadius: BorderRadius.circular(16),
+              // Only shown when a verbatim Tafsir text exists for this ayah.
+              if (tafsir != null) ...[
+                Container(
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: isDark ? AppColors.darkCard : AppColors.lightBackground,
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Row(
+                        children: [
+                          Icon(Icons.auto_stories, color: AppColors.emeraldGreen, size: 18),
+                          SizedBox(width: 6),
+                          Text(
+                            QuranTafsirData.sourceName,
+                            style: TextStyle(fontWeight: FontWeight.bold, color: AppColors.emeraldGreen),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        tafsir,
+                        style: AppTypography.bodyMedium(isDark).copyWith(height: 1.6),
+                      ),
+                    ],
+                  ),
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Row(
-                      children: [
-                        Icon(Icons.auto_stories, color: AppColors.emeraldGreen, size: 18),
-                        SizedBox(width: 6),
-                        Text(
-                          'التفسير الميسر',
-                          style: TextStyle(fontWeight: FontWeight.bold, color: AppColors.emeraldGreen),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      tafsir,
-                      style: AppTypography.bodyMedium(isDark).copyWith(height: 1.6),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 16),
+                const SizedBox(height: 16),
+              ],
               Row(
                 children: [
                   Expanded(

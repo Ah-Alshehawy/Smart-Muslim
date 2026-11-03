@@ -33,7 +33,8 @@ enum AdhanSoundId {
       case 'abdulbasit': return AdhanSoundId.abdulbasit;
       case 'qatami': return AdhanSoundId.qatami;
       case 'dosari': return AdhanSoundId.dosari;
-      case 'madinah': return AdhanSoundId.fajr_madina;
+      // Legacy default key; never map it to a Fajr-only recording (contains التثويب).
+      case 'madinah': return AdhanSoundId.makkah;
       case 'makkah':
       default: return AdhanSoundId.makkah;
     }

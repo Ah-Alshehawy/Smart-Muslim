@@ -212,7 +212,8 @@ class PrayerCalculatorService {
       case AppCalculationMethod.tehran:
         return CalculationMethod.tehran.getParameters();
       case AppCalculationMethod.france:
-        return CalculationMethod.other.getParameters();
+        // UOIF: Fajr 12°, Isha 12° (CalculationMethod.other defaults to 0°/0°).
+        return CalculationParameters(fajrAngle: 12.0, ishaAngle: 12.0, method: CalculationMethod.other);
     }
   }
 
