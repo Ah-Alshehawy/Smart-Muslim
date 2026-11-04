@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Adhan/takbeer/tasbih sounds are referenced only by name from Dart
+  (RawResourceAndroidNotificationSound), so release resource shrinking
+  would otherwise strip them and scheduled notifications would lose their sound.
+-->
+<resources xmlns:tools="http://schemas.android.com/tools"
+    tools:keep="@raw/*" />
