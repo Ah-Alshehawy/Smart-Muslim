@@ -45,7 +45,7 @@ class AboutContactScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 const Text(
-                  'الإصدار 0.2.0-dev.3 (Build 4)',
+                  'الإصدار 0.2.0-dev.4 (Build 10)',
                   style: TextStyle(
                     fontFamily: AppTypography.englishFontFamily,
                     fontSize: 12,

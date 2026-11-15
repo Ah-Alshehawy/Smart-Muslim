@@ -1,7 +1,7 @@
 name: smart_muslim
 description: "Smart Muslim (المسلم الذكي) — Production-Grade, Ad-Free Islamic Mobile Application"
 publish_to: 'none'
-version: 0.2.0-dev.3.4+9
+version: 0.2.0-dev.4+10
 
 environment:
   sdk: '>=3.0.0 <4.0.0'
