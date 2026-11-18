@@ -32,6 +32,18 @@ Classification legend: **VERIFIED** · **VERIFIED WITH LIMITATIONS** · **NOT VE
   - Confirm on a device that the adhan **plays from a scheduled notification**.
 - **The published APK is preserved locally:** `build/app/outputs/flutter-apk/app-release.apk` has been overwritten by this test build. An exact copy of the published APK is kept at `build/published/smart-muslim-v0.2.0-dev.3.4.apk` (SHA-256 `39f4b83c…`, gitignored), for over-install testing.
 
+### Device test log
+| Date | Build | Check | Result | Source |
+|---|---|---|---|---|
+| 2026-11-18 | `0.2.0-dev.4+10` (SHA-256 `d16b1e9b…`) | Update-over-install on top of the published `v0.2.0-dev.3.4` | **PASS**: installed as an update without uninstalling | Reported by the owner; not observed by the auditor |
+| — | `0.2.0-dev.4+10` | Adhan plays from a scheduled notification, screen locked | **Not tested before release, by owner decision** (2026-11-19); to be reported after release | — |
+| — | `0.2.0-dev.4+10` | Adhan after device reboot | Not tested before release, by owner decision | — |
+
+### Signing-key backup log
+| Date | Copy | Verification | Note |
+|---|---|---|---|
+| 2026-11-19 | `D:\Projects\Smart-Muslim-Signing-Backup\debug.keystore`, outside the git repo, on volume D: (a different volume from C:) | File SHA-256 identical to the original (`4851dbae…`); certificate SHA-256 `9B:43:D4…04:AA` | **Same machine.** This protects against a Windows reinstall on C:, but not against disk failure or loss of the device. An offline, encrypted second copy is still recommended. |
+
 **Recommended next action (in order):**
 1. Back up and verify the debug keystore (section C.6). This needs no approval and is risk-free.
 2. Decide the long-term key strategy (section C.7). **REQUIRES OWNER APPROVAL**.
