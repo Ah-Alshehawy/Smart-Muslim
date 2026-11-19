@@ -16,6 +16,14 @@ abstract class NotificationScheduler {
     bool playAdhan = true,
   });
   Future<void> cancelAllNotifications();
+
+  /// Schedules a one-off adhan notification [delaySeconds] from now with the
+  /// given sound. Returns null on success, otherwise a user-facing error.
+  Future<String?> scheduleTestAdhan({
+    required String soundKey,
+    required bool isFullAdhan,
+    int delaySeconds = 10,
+  });
 }
 
 class NotificationSchedulerFactory {
@@ -51,4 +59,12 @@ class NoOpPlatformAdapter implements NotificationScheduler {
 
   @override
   Future<void> cancelAllNotifications() async {}
+
+  @override
+  Future<String?> scheduleTestAdhan({
+    required String soundKey,
+    required bool isFullAdhan,
+    int delaySeconds = 10,
+  }) async =>
+      'إشعارات الأذان غير مدعومة على هذه المنصة';
 }

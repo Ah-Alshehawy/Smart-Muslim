@@ -1,5 +1,7 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_timezone/flutter_timezone.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timezone/data/latest_all.dart' as tz_data;
 import 'package:timezone/timezone.dart' as tz;
 import 'adhan_sound_resolver.dart';
@@ -8,8 +10,13 @@ import 'notification_preferences.dart';
 import '../utils/prayer_calculator.dart';
 
 class AndroidPlatformAdapter implements NotificationScheduler {
+  /// Last scheduling failure, kept so it can be shown to the user for support.
+  static const String lastErrorPrefsKey = 'smart_muslim_last_schedule_error';
+  static const int _testNotificationId = 9999;
+
   final FlutterLocalNotificationsPlugin _notificationsPlugin = FlutterLocalNotificationsPlugin();
   bool _isInitialized = false;
+  String? _lastError;
 
   @override
   Future<void> initialize() async {
@@ -44,6 +51,7 @@ class AndroidPlatformAdapter implements NotificationScheduler {
         'smart_muslim_channel_silent_v2',
         'smart_muslim_channel_adhan_makkah',
         'adhan_channel_id',
+        ...AdhanSoundResolver.legacyChannelIds,
       ];
       for (final legacyId in legacyChannels) {
         try {
@@ -76,6 +84,18 @@ class AndroidPlatformAdapter implements NotificationScheduler {
         enableVibration: true,
       );
       await androidImpl.createNotificationChannel(silentChannel);
+
+      // 3. Register fallback channel (system default sound)
+      const fallbackChannel = AndroidNotificationChannel(
+        AdhanSoundResolver.fallbackChannelId,
+        AdhanSoundResolver.fallbackChannelNameArabic,
+        description: AdhanSoundResolver.fallbackChannelDescriptionArabic,
+        importance: Importance.max,
+        playSound: true,
+        enableVibration: true,
+        audioAttributesUsage: AudioAttributesUsage.alarm,
+      );
+      await androidImpl.createNotificationChannel(fallbackChannel);
     }
 
     _isInitialized = true;
@@ -107,6 +127,8 @@ class AndroidPlatformAdapter implements NotificationScheduler {
     final prefs = await NotificationPreferences.load();
     if (!prefs.globalNotificationsEnabled) return;
 
+    _lastError = null;
+
     final now = DateTime.now();
     for (int dayOffset = 0; dayOffset < 7; dayOffset++) {
       final date = now.add(Duration(days: dayOffset));
@@ -118,7 +140,7 @@ class AndroidPlatformAdapter implements NotificationScheduler {
         juristic: juristic,
       );
 
-      _schedulePrayerIfEnabled(
+      await _schedulePrayerIfEnabled(
         dayOffset: dayOffset,
         prayerKey: 'fajr',
         title: 'صلاة الفجر',
@@ -126,7 +148,7 @@ class AndroidPlatformAdapter implements NotificationScheduler {
         setting: prefs.getPrayer('fajr'),
       );
 
-      _schedulePrayerIfEnabled(
+      await _schedulePrayerIfEnabled(
         dayOffset: dayOffset,
         prayerKey: 'dhuhr',
         title: 'صلاة الظهر',
@@ -134,7 +156,7 @@ class AndroidPlatformAdapter implements NotificationScheduler {
         setting: prefs.getPrayer('dhuhr'),
       );
 
-      _schedulePrayerIfEnabled(
+      await _schedulePrayerIfEnabled(
         dayOffset: dayOffset,
         prayerKey: 'asr',
         title: 'صلاة العصر',
@@ -142,7 +164,7 @@ class AndroidPlatformAdapter implements NotificationScheduler {
         setting: prefs.getPrayer('asr'),
       );
 
-      _schedulePrayerIfEnabled(
+      await _schedulePrayerIfEnabled(
         dayOffset: dayOffset,
         prayerKey: 'maghrib',
         title: 'صلاة المغرب',
@@ -150,7 +172,7 @@ class AndroidPlatformAdapter implements NotificationScheduler {
         setting: prefs.getPrayer('maghrib'),
       );
 
-      _schedulePrayerIfEnabled(
+      await _schedulePrayerIfEnabled(
         dayOffset: dayOffset,
         prayerKey: 'isha',
         title: 'صلاة العشاء',
@@ -158,15 +180,26 @@ class AndroidPlatformAdapter implements NotificationScheduler {
         setting: prefs.getPrayer('isha'),
       );
     }
+
+    await _persistLastError();
   }
 
-  void _schedulePrayerIfEnabled({
+  Future<void> _persistLastError() async {
+    final store = await SharedPreferences.getInstance();
+    if (_lastError == null) {
+      await store.remove(lastErrorPrefsKey);
+    } else {
+      await store.setString(lastErrorPrefsKey, '${DateTime.now().toIso8601String()} $_lastError');
+    }
+  }
+
+  Future<void> _schedulePrayerIfEnabled({
     required int dayOffset,
     required String prayerKey,
     required String title,
     required DateTime time,
     required SinglePrayerSetting setting,
-  }) {
+  }) async {
     if (!setting.notificationEnabled) return;
 
     // 1. Pre-prayer alert if enabled
@@ -174,7 +207,7 @@ class AndroidPlatformAdapter implements NotificationScheduler {
       final preTime = time.subtract(Duration(minutes: setting.prePrayerMinutes));
       if (preTime.isAfter(DateTime.now())) {
         final preId = dayOffset * 100 + _getPrayerIndex(prayerKey) * 10 + 1;
-        _scheduleZonedNotification(
+        final error = await _scheduleZonedNotification(
           id: preId,
           title: 'اقترب موعد $title',
           body: 'يتبقى ${setting.prePrayerMinutes} دقيقة على موعد الأذان',
@@ -184,6 +217,7 @@ class AndroidPlatformAdapter implements NotificationScheduler {
           playSound: false,
           soundResource: null,
         );
+        if (error != null) _lastError = '$prayerKey pre-reminder: $error';
       }
     }
 
@@ -196,27 +230,72 @@ class AndroidPlatformAdapter implements NotificationScheduler {
           ? AdhanSoundId.takbeer
           : AdhanSoundResolver.resolve(setting.adhanSound);
 
-      final String channelId = playSound
-          ? selectedSound.androidChannelId
-          : AdhanSoundResolver.silentChannelId;
-      final String channelName = playSound
-          ? selectedSound.androidChannelNameArabic
-          : AdhanSoundResolver.silentChannelNameArabic;
-      final String? soundResource = playSound
-          ? selectedSound.androidRawResourceName
-          : null;
-
-      _scheduleZonedNotification(
+      final error = await _scheduleAdhanNotification(
         id: mainId,
         title: 'المسلم الذكي — $title',
         body: 'حان الآن موعد $title حسب التوقيت المحلي',
         time: time,
-        channelId: channelId,
-        channelName: channelName,
         playSound: playSound,
-        soundResource: soundResource,
+        sound: selectedSound,
       );
+      if (error != null) _lastError = '$prayerKey adhan: $error';
     }
+  }
+
+  /// Schedules the prayer-time notification with the chosen adhan sound. If
+  /// that fails (e.g. the sound resource is missing), falls back to the
+  /// system default sound so the prayer-time notification still appears.
+  /// Returns null when the adhan sound was scheduled, otherwise the reason.
+  Future<String?> _scheduleAdhanNotification({
+    required int id,
+    required String title,
+    required String body,
+    required DateTime time,
+    required bool playSound,
+    required AdhanSoundId sound,
+  }) async {
+    final error = await _scheduleZonedNotification(
+      id: id,
+      title: title,
+      body: body,
+      time: time,
+      channelId: playSound ? sound.androidChannelId : AdhanSoundResolver.silentChannelId,
+      channelName: playSound ? sound.androidChannelNameArabic : AdhanSoundResolver.silentChannelNameArabic,
+      playSound: playSound,
+      soundResource: playSound ? sound.androidRawResourceName : null,
+    );
+    if (error == null || !playSound) return error;
+
+    final fallbackError = await _scheduleZonedNotification(
+      id: id,
+      title: title,
+      body: body,
+      time: time,
+      channelId: AdhanSoundResolver.fallbackChannelId,
+      channelName: AdhanSoundResolver.fallbackChannelNameArabic,
+      playSound: true,
+      soundResource: null,
+    );
+    return fallbackError == null ? '$error (scheduled with default sound)' : '$error; fallback: $fallbackError';
+  }
+
+  @override
+  Future<String?> scheduleTestAdhan({
+    required String soundKey,
+    required bool isFullAdhan,
+    int delaySeconds = 10,
+  }) async {
+    await initialize();
+    final sound = isFullAdhan ? AdhanSoundResolver.resolve(soundKey) : AdhanSoundId.takbeer;
+    await _notificationsPlugin.cancel(_testNotificationId);
+    return _scheduleAdhanNotification(
+      id: _testNotificationId,
+      title: 'المسلم الذكي — تجربة الأذان',
+      body: 'إشعار تجريبي بصوت: ${sound.titleArabic}',
+      time: DateTime.now().add(Duration(seconds: delaySeconds)),
+      playSound: true,
+      sound: sound,
+    );
   }
 
   int _getPrayerIndex(String key) {
@@ -236,7 +315,8 @@ class AndroidPlatformAdapter implements NotificationScheduler {
     }
   }
 
-  void _scheduleZonedNotification({
+  /// Returns null on success, otherwise the error description.
+  Future<String?> _scheduleZonedNotification({
     required int id,
     required String title,
     required String body,
@@ -275,8 +355,10 @@ class AndroidPlatformAdapter implements NotificationScheduler {
         uiLocalNotificationDateInterpretation:
             UILocalNotificationDateInterpretation.absoluteTime,
       );
-    } catch (_) {
-      // Fallback for system timezone edge cases
+      return null;
+    } catch (e) {
+      debugPrint('Failed to schedule notification $id on $channelId: $e');
+      return e.toString();
     }
   }
 

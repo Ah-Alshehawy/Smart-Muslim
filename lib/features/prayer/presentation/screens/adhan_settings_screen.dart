@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../core/notifications/adhan_sound_resolver.dart';
+import '../../../../core/notifications/android_platform_adapter.dart';
 import '../../../../core/notifications/adhan_audio_service.dart';
 import '../../../../core/notifications/notification_preferences.dart';
 import '../../../../core/notifications/notification_scheduler.dart';
@@ -26,6 +28,8 @@ class _AdhanSettingsScreenState extends State<AdhanSettingsScreen> {
 
   NotificationPreferences _prefs = NotificationPreferences.defaultConfig();
   bool _isLoading = true;
+  bool _isTestingNotification = false;
+  String? _lastScheduleError;
   String _selectedPrayerKey = 'fajr';
 
   final Map<String, String> _prayerNamesArabic = {
@@ -60,10 +64,34 @@ class _AdhanSettingsScreenState extends State<AdhanSettingsScreen> {
 
   Future<void> _loadPreferences() async {
     final loaded = await NotificationPreferences.load();
+    final store = await SharedPreferences.getInstance();
     setState(() {
       _prefs = loaded;
+      _lastScheduleError = store.getString(AndroidPlatformAdapter.lastErrorPrefsKey);
       _isLoading = false;
     });
+  }
+
+  Future<void> _testAdhanNotification() async {
+    setState(() => _isTestingNotification = true);
+    final setting = _prefs.getPrayer(_selectedPrayerKey);
+    final scheduler = NotificationSchedulerFactory.createAdapter();
+    await scheduler.checkAndRequestPermissions();
+    final error = await scheduler.scheduleTestAdhan(
+      soundKey: setting.adhanSound,
+      isFullAdhan: setting.isFullAdhan,
+    );
+    if (!mounted) return;
+    setState(() => _isTestingNotification = false);
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(error == null
+            ? 'تمت جدولة إشعار تجريبي بعد ١٠ ثوانٍ'
+            : 'تعذرت جدولة الأذان: $error'),
+        backgroundColor: error == null ? AppColors.emeraldGreen : AppColors.danger,
+        duration: Duration(seconds: error == null ? 3 : 10),
+      ),
+    );
   }
 
   Future<void> _savePreferences() async {
@@ -211,6 +239,34 @@ class _AdhanSettingsScreenState extends State<AdhanSettingsScreen> {
                   ),
                 ),
               ],
+            ),
+          ),
+          const SizedBox(height: 12),
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text(
+                    'يرسل إشعار أذان تجريبيًا بعد ١٠ ثوانٍ بالصوت المختار لـ${_prayerNamesArabic[_selectedPrayerKey]}. اقفل الشاشة وانتظر.',
+                    style: AppTypography.caption(isDark).copyWith(fontSize: 12),
+                  ),
+                  const SizedBox(height: 8),
+                  OutlinedButton.icon(
+                    icon: const Icon(Icons.notifications_active_outlined),
+                    label: const Text('تجربة إشعار الأذان'),
+                    onPressed: _isTestingNotification ? null : _testAdhanNotification,
+                  ),
+                  if (_lastScheduleError != null) ...[
+                    const SizedBox(height: 8),
+                    Text(
+                      'آخر خطأ في الجدولة: $_lastScheduleError',
+                      style: const TextStyle(fontSize: 11, color: AppColors.danger),
+                    ),
+                  ],
+                ],
+              ),
             ),
           ),
           const SizedBox(height: 24),

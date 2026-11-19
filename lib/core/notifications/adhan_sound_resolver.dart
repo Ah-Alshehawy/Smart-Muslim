@@ -100,10 +100,10 @@ enum AdhanSoundId {
 
   String get androidChannelId {
     switch (this) {
-      case AdhanSoundId.makkah: return 'smart_muslim_channel_adhan_makkah_v4';
-      case AdhanSoundId.takbeer: return 'smart_muslim_channel_takbeer_v4';
-      case AdhanSoundId.beep: return 'smart_muslim_channel_chime_v4';
-      default: return 'smart_muslim_channel_adhan_${name}_v4';
+      case AdhanSoundId.makkah: return 'smart_muslim_channel_adhan_makkah_v5';
+      case AdhanSoundId.takbeer: return 'smart_muslim_channel_takbeer_v5';
+      case AdhanSoundId.beep: return 'smart_muslim_channel_chime_v5';
+      default: return 'smart_muslim_channel_adhan_${name}_v5';
     }
   }
 
@@ -129,9 +129,24 @@ enum AdhanSoundId {
 /// Single Source of Truth for resolving Adhan sound configuration across
 /// UI settings, audio preview, notification channels, and alarm schedules.
 abstract class AdhanSoundResolver {
-  static const String silentChannelId = 'smart_muslim_channel_silent_v4';
+  static const String silentChannelId = 'smart_muslim_channel_silent_v5';
   static const String silentChannelNameArabic = 'إشعارات الصلاة الصامتة';
   static const String silentChannelDescriptionArabic = 'تنبيهات صامتة بدون صوت لدخول وقت الصلاة';
+
+  /// Used when a notification with a custom adhan sound cannot be scheduled,
+  /// so the prayer-time notification still appears with the system sound.
+  static const String fallbackChannelId = 'smart_muslim_channel_default_sound_v5';
+  static const String fallbackChannelNameArabic = 'إشعارات الصلاة بالصوت الافتراضي';
+  static const String fallbackChannelDescriptionArabic = 'تنبيه دخول وقت الصلاة بصوت الجهاز عند تعذر تشغيل الأذان';
+
+  /// Previous channel generations, deleted on startup so stale channel
+  /// settings (sound, importance) from older builds cannot linger.
+  static List<String> get legacyChannelIds => [
+        for (final suffix in ['_v3', '_v4']) ...[
+          for (final sound in AdhanSoundId.values) sound.androidChannelId.replaceFirst('_v5', suffix),
+          silentChannelId.replaceFirst('_v5', suffix),
+        ],
+      ];
 
   /// Resolves raw string key into a valid [AdhanSoundId]
   static AdhanSoundId resolve(String? soundKey) => AdhanSoundId.fromKey(soundKey);

@@ -103,4 +103,12 @@ class IosPlatformAdapter implements NotificationScheduler {
   Future<void> cancelAllNotifications() async {
     await _notificationsPlugin.cancelAll();
   }
+
+  @override
+  Future<String?> scheduleTestAdhan({
+    required String soundKey,
+    required bool isFullAdhan,
+    int delaySeconds = 10,
+  }) async =>
+      'تجربة إشعار الأذان غير متاحة على iOS حاليًا';
 }

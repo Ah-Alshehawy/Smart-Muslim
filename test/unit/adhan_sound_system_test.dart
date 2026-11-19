@@ -32,9 +32,9 @@ void main() {
       final beepChannel = AdhanSoundResolver.getChannelId(audioEnabled: true, soundKey: 'beep');
       final silentChannel = AdhanSoundResolver.getChannelId(audioEnabled: false, soundKey: 'makkah');
 
-      expect(makkahChannel, equals('smart_muslim_channel_adhan_makkah_v4'));
-      expect(takbeerChannel, equals('smart_muslim_channel_takbeer_v4'));
-      expect(beepChannel, equals('smart_muslim_channel_chime_v4'));
+      expect(makkahChannel, equals('smart_muslim_channel_adhan_makkah_v5'));
+      expect(takbeerChannel, equals('smart_muslim_channel_takbeer_v5'));
+      expect(beepChannel, equals('smart_muslim_channel_chime_v5'));
       expect(silentChannel, equals(AdhanSoundResolver.silentChannelId));
 
       // Distinct channels guarantee Android 8+ immutable channel sound works
@@ -64,7 +64,7 @@ void main() {
           audioEnabled: config.getPrayer('fajr').adhanAudioEnabled,
           soundKey: config.getPrayer('fajr').adhanSound,
         ),
-        equals('smart_muslim_channel_adhan_makkah_v4'),
+        equals('smart_muslim_channel_adhan_makkah_v5'),
       );
 
       expect(
@@ -72,7 +72,7 @@ void main() {
           audioEnabled: config.getPrayer('dhuhr').adhanAudioEnabled,
           soundKey: config.getPrayer('dhuhr').adhanSound,
         ),
-        equals('smart_muslim_channel_takbeer_v4'),
+        equals('smart_muslim_channel_takbeer_v5'),
       );
 
       expect(
@@ -80,7 +80,7 @@ void main() {
           audioEnabled: config.getPrayer('asr').adhanAudioEnabled,
           soundKey: config.getPrayer('asr').adhanSound,
         ),
-        equals('smart_muslim_channel_chime_v4'),
+        equals('smart_muslim_channel_chime_v5'),
       );
     });
 
@@ -122,6 +122,16 @@ void main() {
         final sound = AdhanSoundResolver.resolve(defaults.prayers[prayer]!.adhanSound);
         expect(sound.name.startsWith('fajr_'), isFalse, reason: prayer);
       }
+    });
+    test('7. Legacy v3/v4 channels are scheduled for deletion and never reused', () {
+      final legacy = AdhanSoundResolver.legacyChannelIds;
+      expect(legacy, contains('smart_muslim_channel_adhan_makkah_v4'));
+      expect(legacy, contains('smart_muslim_channel_silent_v3'));
+      for (final sound in AdhanSoundResolver.availableSounds) {
+        expect(legacy, isNot(contains(sound.androidChannelId)));
+      }
+      expect(legacy, isNot(contains(AdhanSoundResolver.fallbackChannelId)));
+      expect(legacy, isNot(contains(AdhanSoundResolver.silentChannelId)));
     });
   });
 }
