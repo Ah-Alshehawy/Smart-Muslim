@@ -3,6 +3,7 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../../data/quran_repository.dart';
 import '../../domain/surah_model.dart';
+import '../../../recitation/presentation/screens/recitation_screen.dart';
 import 'quran_reader_screen.dart';
 
 class QuranSurahListScreen extends StatefulWidget {
@@ -69,6 +70,16 @@ class _QuranSurahListScreenState extends State<QuranSurahListScreen> {
           ),
         ),
         actions: [
+          IconButton(
+            icon: const Icon(Icons.headphones, color: AppColors.emeraldGreen),
+            tooltip: 'التلاوات الصوتية',
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const RecitationScreen()),
+              );
+            },
+          ),
           IconButton(
             icon: const Icon(Icons.menu_book, color: AppColors.emeraldGreen),
             tooltip: 'المصحف الشريف (صفحات)',
