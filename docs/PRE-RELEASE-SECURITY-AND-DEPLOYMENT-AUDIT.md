@@ -39,6 +39,11 @@ Classification legend: **VERIFIED** · **VERIFIED WITH LIMITATIONS** · **NOT VE
 | — | `0.2.0-dev.4+10` | Adhan plays from a scheduled notification, screen locked | **Not tested before release, by owner decision** (2026-11-19); to be reported after release | — |
 | — | `0.2.0-dev.4+10` | Adhan after device reboot | Not tested before release, by owner decision | — |
 
+| 2026-11-19 | `0.2.0-dev.4+10` (published) | Adhan at prayer time | **FAIL**: no prayer-time notification at all; pre-prayer reminders work | Reported by the owner |
+| 2026-11-19 | `0.2.0-dev.5+11` (test build) | "Test adhan notification" button, several sounds | **PASS**: notification appeared and played each chosen sound | Reported by the owner |
+| — | `0.2.0-dev.5+11` | Scheduled adhan at a real prayer time | Pending | — |
+| — | `0.2.0-dev.5+11` | Recitation: stream, download, offline playback | Pending | — |
+
 ### Signing-key backup log
 | Date | Copy | Verification | Note |
 |---|---|---|---|
