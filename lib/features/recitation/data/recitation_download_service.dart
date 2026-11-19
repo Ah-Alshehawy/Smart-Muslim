@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 
@@ -13,6 +14,9 @@ class RecitationDownloadService {
   RecitationDownloadService({http.Client? client, Future<Directory> Function()? baseDirectory})
       : _client = client ?? http.Client(),
         _baseDirectory = baseDirectory ?? getApplicationDocumentsDirectory;
+
+  /// Offline storage needs a local file system, which the web build lacks.
+  static bool get isSupported => !kIsWeb;
 
   final http.Client _client;
   final Future<Directory> Function() _baseDirectory;

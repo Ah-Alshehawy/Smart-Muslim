@@ -74,6 +74,7 @@ class _RecitationScreenState extends State<RecitationScreen> {
   }
 
   Future<void> _refreshDownloads() async {
+    if (!RecitationDownloadService.isSupported) return;
     final downloaded = await _downloads.downloadedSurahs(_reciter);
     final bytes = await _downloads.storageBytes(_reciter);
     if (!mounted) return;
@@ -234,8 +235,10 @@ class _RecitationScreenState extends State<RecitationScreen> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
             child: Text(
-              '${_reciter.moshafNameArabic} · محفوظ على الجهاز: '
-              '${_digits('${_downloaded.length}')} سورة (${_formatSize(_storageBytes)})',
+              RecitationDownloadService.isSupported
+                  ? '${_reciter.moshafNameArabic} · محفوظ على الجهاز: '
+                      '${_digits('${_downloaded.length}')} سورة (${_formatSize(_storageBytes)})'
+                  : '${_reciter.moshafNameArabic} · التنزيل للاستماع دون إنترنت متاح في تطبيق أندرويد',
               style: TextStyle(fontSize: 12, color: secondary),
             ),
           ),
@@ -268,7 +271,9 @@ class _RecitationScreenState extends State<RecitationScreen> {
     final isCurrent = _playingSurah == number;
 
     Widget downloadAction;
-    if (isDownloading) {
+    if (!RecitationDownloadService.isSupported) {
+      downloadAction = const SizedBox.shrink();
+    } else if (isDownloading) {
       downloadAction = SizedBox(
         width: 48,
         child: Center(
